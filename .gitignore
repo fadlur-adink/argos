@@ -1,0 +1,30 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+.yarn/install-state.gz
+
+config.json
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment
+.env
+.swc
+.env.development
+.env*.local
+
+/scratch
+
+reviews/*
+!reviews/.gitkeep
+
+state/prompts/*
+state/worktrees/*
+state/agent.db
+
+!state/prompts/.gitkeep
+!state/worktrees/.gitkeep

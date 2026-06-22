@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Reviewer - Reports</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Markdown parser -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <!-- Syntax highlighting -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  
+  <style>
+    :root {
+      --bg-color: #0f111a;
+      --surface-color: #1a1d27;
+      --surface-hover: #232736;
+      --border-color: #2b3041;
+      --text-main: #e2e8f0;
+      --text-muted: #94a3b8;
+      --primary: #3b82f6;
+      --success: #10b981;
+      --error: #ef4444;
+      --pending: #f59e0b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 320px;
+      min-width: 320px;
+      background-color: var(--surface-color);
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar-header {
+      padding: 20px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .sidebar-header h1 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .review-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px;
+    }
+
+    .review-item {
+      padding: 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-bottom: 5px;
+      transition: background-color 0.2s;
+    }
+
+    .review-item:hover, .review-item.active {
+      background-color: var(--surface-hover);
+    }
+
+    .review-title {
+      font-weight: 500;
+      margin-bottom: 5px;
+      font-size: 0.95rem;
+    }
+
+    .review-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      align-items: center;
+    }
+
+    .status-badge {
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .status-completed { background: rgba(16, 185, 129, 0.1); color: var(--success); }
+    .status-pending { background: rgba(245, 158, 11, 0.1); color: var(--pending); }
+    .status-failed { background: rgba(239, 68, 68, 0.1); color: var(--error); }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .top-bar {
+      height: 65px;
+      border-bottom: 1px solid var(--border-color);
+      padding: 0 30px;
+      display: flex;
+      align-items: center;
+      background-color: var(--surface-color);
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    .content-area {
+      flex: 1;
+      overflow-y: auto;
+      padding: 40px;
+    }
+
+    .empty-state {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    /* Markdown Styles */
+    .markdown-body {
+      max-width: 900px;
+      margin: 0 auto;
+      line-height: 1.6;
+      font-size: 1rem;
+    }
+
+    .markdown-body h1 { font-size: 2em; margin-bottom: 0.5em; border-bottom: 1px solid var(--border-color); padding-bottom: 0.3em; }
+    .markdown-body h2 { font-size: 1.5em; margin-top: 1.5em; margin-bottom: 0.5em; }
+    .markdown-body h3 { font-size: 1.25em; margin-top: 1.5em; margin-bottom: 0.5em; }
+    .markdown-body p { margin-bottom: 1em; }
+    .markdown-body ul { margin-bottom: 1em; padding-left: 2em; }
+    .markdown-body li { margin-bottom: 0.25em; }
+    .markdown-body a { color: var(--primary); text-decoration: none; }
+    .markdown-body a:hover { text-decoration: underline; }
+    .markdown-body code {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0.2em 0.4em;
+      border-radius: 4px;
+      font-size: 0.85em;
+      font-family: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+    }
+    .markdown-body pre {
+      background: #0d1117;
+      padding: 16px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin-bottom: 1em;
+      border: 1px solid var(--border-color);
+    }
+    .markdown-body pre code {
+      background: transparent;
+      padding: 0;
+    }
+    
+    .loading {
+      text-align: center;
+      padding: 20px;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h1>🤖 AI Reviewer</h1>
+    </div>
+    <div class="review-list" id="reviewList">
+      <div class="loading">Loading reviews...</div>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <div class="top-bar" id="topBar">
+      Select a review to view details
+    </div>
+    <div class="content-area" id="contentArea">
+      <div class="empty-state">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+        <p>No report selected</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Initialize marked with highlight.js
+    marked.setOptions({
+      highlight: function(code, lang) {
+        if (lang && hljs.getLanguage(lang)) {
+          return hljs.highlight(code, { language: lang }).value;
+        }
+        return hljs.highlightAuto(code).value;
+      }
+    });
+
+    async function loadReviews() {
+      try {
+        const res = await fetch('/api/reviews');
+        const reviews = await res.json();
+        
+        const listEl = document.getElementById('reviewList');
+        if (reviews.length === 0) {
+          listEl.innerHTML = '<div class="loading">No reviews found.</div>';
+          return;
+        }
+
+        listEl.innerHTML = '';
+        reviews.forEach(review => {
+          const el = document.createElement('div');
+          el.className = 'review-item';
+          
+          const date = new Date(review.created_at).toLocaleString();
+          const statusClass = `status-${review.status.toLowerCase()}`;
+          
+          el.innerHTML = `
+            <div class="review-title">${review.project_name} !${review.mr_id}</div>
+            <div class="review-meta">
+              <span>${date}</span>
+              <span class="status-badge ${statusClass}">${review.status}</span>
+            </div>
+          `;
+          
+          el.onclick = () => {
+            document.querySelectorAll('.review-item').forEach(i => i.classList.remove('active'));
+            el.classList.add('active');
+            
+            // Update URL without refreshing the page
+            const newUrl = new URL(window.location);
+            newUrl.searchParams.set('id', review.id);
+            window.history.pushState({}, '', newUrl);
+            
+            loadReport(review);
+          };
+          
+          // Add custom attribute to find it later
+          el.dataset.id = review.id;
+          
+          listEl.appendChild(el);
+        });
+
+        // Auto-open specific review if 'id' query parameter is present (first load only)
+        const params = new URLSearchParams(window.location.search);
+        const autoOpenId = params.get('id');
+        if (autoOpenId && !window._initialLoadDone) {
+          const targetReview = reviews.find(r => r.id == autoOpenId);
+          if (targetReview) {
+            const targetEl = document.querySelector(`.review-item[data-id="${autoOpenId}"]`);
+            if (targetEl) targetEl.classList.add('active');
+            loadReport(targetReview);
+          }
+          window._initialLoadDone = true;
+        }
+      } catch (err) {
+        document.getElementById('reviewList').innerHTML = '<div class="loading" style="color:var(--error)">Error loading reviews.</div>';
+      }
+    }
+
+    async function loadReport(review) {
+      const contentEl = document.getElementById('contentArea');
+      const topBarEl = document.getElementById('topBar');
+      
+      topBarEl.textContent = `${review.project_name} - MR !${review.mr_id} (${review.commit_sha.substring(0, 8)})`;
+      contentEl.innerHTML = '<div class="empty-state"><div class="loading">Loading report...</div></div>';
+      
+      if (review.status === 'PENDING') {
+        contentEl.innerHTML = '<div class="empty-state"><p>This review is currently pending.</p></div>';
+        return;
+      }
+      
+      if (review.status === 'FAILED') {
+        contentEl.innerHTML = '<div class="empty-state"><p style="color:var(--error)">This review failed to generate.</p></div>';
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/reviews/${review.id}`);
+        if (!res.ok) throw new Error('Report not found');
+        
+        const data = await res.json();
+        if (data.markdown) {
+          const html = marked.parse(data.markdown);
+          contentEl.innerHTML = `<div class="markdown-body">${html}</div>`;
+        } else {
+          contentEl.innerHTML = '<div class="empty-state"><p>No markdown content available.</p></div>';
+        }
+      } catch (err) {
+        contentEl.innerHTML = `<div class="empty-state"><p style="color:var(--error)">Failed to load report: ${err.message}</p></div>`;
+      }
+    }
+
+    // Load initial data
+    loadReviews();
+    
+    // Auto-refresh the list every 10 seconds to catch new reviews
+    setInterval(loadReviews, 10000);
+  </script>
+</body>
+</html>
