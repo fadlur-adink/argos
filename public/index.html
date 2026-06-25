@@ -122,9 +122,30 @@
       padding: 0 30px;
       display: flex;
       align-items: center;
+      justify-content: space-between;
       background-color: var(--surface-color);
       font-weight: 500;
       color: var(--text-muted);
+    }
+
+    .retry-btn {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: none;
+      transition: background-color 0.2s;
+    }
+    .retry-btn:hover {
+      background-color: #2563eb;
+    }
+    .retry-btn:disabled {
+      background-color: var(--text-muted);
+      cursor: not-allowed;
     }
 
     .content-area {
@@ -198,8 +219,9 @@
   </div>
 
   <div class="main-content">
-    <div class="top-bar" id="topBar">
-      Select a review to view details
+    <div class="top-bar">
+      <div id="topBarTitle">Select a review to view details</div>
+      <button class="retry-btn" id="retryBtn" onclick="retryReview()">Retry Review</button>
     </div>
     <div class="content-area" id="contentArea">
       <div class="empty-state">
@@ -282,11 +304,37 @@
       }
     }
 
+    let currentReviewId = null;
+
+    async function retryReview() {
+      if (!currentReviewId) return;
+      const btn = document.getElementById('retryBtn');
+      btn.disabled = true;
+      btn.textContent = 'Retrying...';
+      try {
+        const res = await fetch(`/api/reviews/${currentReviewId}/retry`, { method: 'POST' });
+        if (res.ok) {
+          alert('Review queued for retry. It may take a few minutes.');
+          loadReviews();
+        } else {
+          alert('Failed to queue retry');
+        }
+      } catch (err) {
+        alert('Error: ' + err.message);
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Retry Review';
+      }
+    }
+
     async function loadReport(review) {
+      currentReviewId = review.id;
       const contentEl = document.getElementById('contentArea');
-      const topBarEl = document.getElementById('topBar');
+      const topBarTitleEl = document.getElementById('topBarTitle');
+      const retryBtn = document.getElementById('retryBtn');
       
-      topBarEl.textContent = `${review.project_name} - MR !${review.mr_id} (${review.commit_sha.substring(0, 8)})`;
+      topBarTitleEl.textContent = `${review.project_name} - MR !${review.mr_id} (${review.commit_sha.substring(0, 8)})`;
+      retryBtn.style.display = 'block';
       contentEl.innerHTML = '<div class="empty-state"><div class="loading">Loading report...</div></div>';
       
       if (review.status === 'PENDING') {

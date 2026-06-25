@@ -76,22 +76,24 @@ async function bootstrap() {
           event.mrId,
           details.sha,
         );
-        if (
-          existingReview &&
-          (existingReview.status === "COMPLETED" ||
-            existingReview.status === "PENDING")
-        ) {
-          logger.info(
-            `Review for MR !${event.mrId} at commit ${details.sha} is already ${existingReview.status}. Skipping.`,
-          );
-          return;
-        }
 
-        const reviewId = await insertReview(
-          event.projectName,
-          event.mrId,
-          details.sha,
-        );
+        let reviewId: number;
+        if (existingReview) {
+          if (!event.forceRetry && (existingReview.status === "COMPLETED" || existingReview.status === "PENDING")) {
+            logger.info(
+              `Review for MR !${event.mrId} at commit ${details.sha} is already ${existingReview.status}. Skipping.`,
+            );
+            return;
+          }
+          reviewId = existingReview.id;
+          await updateReviewStatus(reviewId, "PENDING");
+        } else {
+          reviewId = await insertReview(
+            event.projectName,
+            event.mrId,
+            details.sha,
+          );
+        }
 
         // Step 2: Create isolated worktree
         await createWorktree(repoConfig.localPath, event.mrId, worktreePath);

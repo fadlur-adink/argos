@@ -1,6 +1,6 @@
 import express from 'express';
 import { logger } from './logger';
-import { parseGitLabEmail } from './parser';
+import { parseGitLabEmail, MergeRequestEvent } from './parser';
 import { EventQueue } from './queue';
 import { Config } from './config';
 import { getAllReviews, getReviewById } from './db';
@@ -49,6 +49,33 @@ export function startServer(config: Config, queue: EventQueue) {
       res.json({ ...review, markdown });
     } catch (err: any) {
       logger.error(`Error fetching review ${req.params.id}: ${err.message}`);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+
+  // Retry a specific review
+  app.post('/api/reviews/:id/retry', async (req, res) => {
+    try {
+      const id = parseInt(req.params.id, 10);
+      if (isNaN(id)) return res.status(400).json({ error: 'Invalid ID' });
+
+      const review = await getReviewById(id);
+      if (!review) return res.status(404).json({ error: 'Review not found' });
+
+      const event: MergeRequestEvent = {
+        projectUrl: '',
+        projectName: review.project_name,
+        mrId: review.mr_id,
+        mrTitle: 'Retried Review',
+        mrUrl: '', 
+        action: 'updated',
+        forceRetry: true
+      };
+
+      queue.enqueue(event);
+      res.json({ status: 'Retrying' });
+    } catch (err: any) {
+      logger.error(`Error retrying review ${req.params.id}: ${err.message}`);
       res.status(500).json({ error: 'Internal server error' });
     }
   });

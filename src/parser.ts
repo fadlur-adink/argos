@@ -5,6 +5,7 @@ export interface MergeRequestEvent {
   mrTitle: string;
   mrUrl: string;
   action: 'opened' | 'updated' | 'commented' | 'approved' | 'merged' | 'unknown';
+  forceRetry?: boolean;
 }
 
 /**
