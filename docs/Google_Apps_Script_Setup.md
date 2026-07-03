@@ -1,6 +1,6 @@
 # Google Apps Script Setup
 
-To forward GitLab merge request emails to your local AI Reviewer Agent, follow these steps to configure the Google Apps Script companion.
+To forward GitLab merge request emails to your local Argos instance, follow these steps to configure the Google Apps Script companion.
 
 ## 1. Gmail Filter Setup
 

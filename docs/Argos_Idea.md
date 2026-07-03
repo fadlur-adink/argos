@@ -1,8 +1,8 @@
-# AI Reviewer Agent
+# Argos
 
 ## Overview
 
-AI Reviewer Agent is a personal automation tool designed to provide AI-assisted merge request summaries and code review insights without requiring GitLab webhook permissions or modifications to the target repository.
+Argos is a personal automation tool designed to provide AI-assisted merge request summaries and code review insights without requiring GitLab webhook permissions or modifications to the target repository.
 
 The system monitors GitLab merge request notifications delivered through email, automatically triggers an AI review process, and produces private reports for the user.
 
@@ -69,7 +69,7 @@ Google Apps Script (HTTP POST)
 
 ↓
 
-AI Reviewer Agent HTTP Endpoint (WSL2)
+Argos HTTP Endpoint (WSL2)
 
 ↓
 
@@ -103,7 +103,7 @@ Markdown Report / Telegram Notification (optional)
 │   ├── .agents/
 │   └── ...
 │
-└── ai-reviewer-agent/  (this project)
+└── argos/  (this project)
     ├── src/
     ├── prompts/
     ├── reviews/

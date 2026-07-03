@@ -1,5 +1,5 @@
 /**
- * Google Apps Script to forward GitLab Merge Request notifications to the AI Reviewer Agent.
+ * Google Apps Script to forward GitLab Merge Request notifications to Argos.
  * 
  * Setup:
  * 1. Create a filter in Gmail to label incoming GitLab MR emails (e.g., label: "GitLab/MRs").

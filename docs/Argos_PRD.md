@@ -1,6 +1,6 @@
 # Product Requirements Document (PRD)
 
-# AI Reviewer Agent
+# Argos
 
 Version: 1.0
 

@@ -1,4 +1,4 @@
-# AI Reviewer Agent
+# Argos
 
 A personal, self-hosted AI code review assistant that automatically generates structured review reports for GitLab Merge Requests — without requiring GitLab webhook permissions or modifying the target repository.
 
@@ -9,7 +9,7 @@ GitLab MR Notification Email
         ↓
   Gmail Filter  →  Google Apps Script (HTTP POST)
         ↓
-  AI Reviewer Agent (Express HTTP Server)
+  Argos (Express HTTP Server)
         ↓
   ┌──────────────────────────────────────────┐
   │  1. Parse email → extract MR metadata    │
@@ -60,8 +60,8 @@ The agent monitors GitLab merge request notifications delivered through email (f
 ### 1. Clone & install dependencies
 
 ```bash
-git clone <repo-url> ai-reviewer-agent
-cd ai-reviewer-agent
+git clone <repo-url> argos
+cd argos
 npm install
 ```
 
@@ -78,7 +78,7 @@ Edit `config/config.json`:
 ```jsonc
 {
   "port": 8000,                           // HTTP server port (default: 8000)
-  "publicUrl": "https://ai-reviewer.example.com",  // Public URL for notification deep-links (default: http://localhost:8000)
+  "publicUrl": "https://argos.example.com",  // Public URL for notification deep-links (default: http://localhost:8000)
   "repositories": {
     "my-project": {                       // project name as it appears in GitLab URLs
       "projectId": 123,                   // GitLab project ID
@@ -97,7 +97,7 @@ Edit `config/config.json`:
       "user": "user@example.com",
       "pass": "password"
     },
-    "from": "ai-reviewer@example.com",
+    "from": "argos@example.com",
     "to": ["developer@example.com"]
   }
 }
@@ -160,13 +160,13 @@ The built-in web UI is served at the root URL (`/`) and provides:
 ## Project Structure
 
 ```
-ai-reviewer-agent/
+argos/
 ├── config/
 │   ├── config.example.json      # Example configuration
 │   └── config.json              # Your local configuration (gitignored)
 ├── docs/
-│   ├── AI_Reviewer_Agent_Idea.md
-│   ├── AI_Reviewer_Agent_PRD.md
+│   ├── Argos_Idea.md
+│   ├── Argos_PRD.md
 │   └── Google_Apps_Script_Setup.md
 ├── public/
 │   └── index.html               # Web Dashboard (SPA with markdown rendering)
@@ -313,8 +313,8 @@ bash scripts/test-webhook.sh
 
 ## Documentation
 
-- [Project Idea](docs/AI_Reviewer_Agent_Idea.md) — original concept and motivation
-- [Product Requirements (PRD)](docs/AI_Reviewer_Agent_PRD.md) — full functional and non-functional requirements
+- [Project Idea](docs/Argos_Idea.md) — original concept and motivation
+- [Product Requirements (PRD)](docs/Argos_PRD.md) — full functional and non-functional requirements
 - [Google Apps Script Setup](docs/Google_Apps_Script_Setup.md) — step-by-step email bridge configuration
 
 ## License

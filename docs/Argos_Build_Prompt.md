@@ -1,10 +1,10 @@
-# AI Agent Build Prompt: AI Reviewer Agent
+# AI Agent Build Prompt: Argos
 
 ---
 
 ## Project Context
 
-You are building a personal developer productivity tool called **AI Reviewer Agent**. It is a fully automated pipeline that watches for incoming GitLab merge request notifications (arriving as emails), pulls the full MR context, runs an AI-assisted review using the repository's own documentation and conventions, and delivers a private Markdown report to the developer — all without touching the developer's working environment or posting anything to GitLab.
+You are building a personal developer productivity tool called **Argos**. It is a fully automated pipeline that watches for incoming GitLab merge request notifications (arriving as emails), pulls the full MR context, runs an AI-assisted review using the repository's own documentation and conventions, and delivers a private Markdown report to the developer — all without touching the developer's working environment or posting anything to GitLab.
 
 The user is a developer working on WSL2. They have `glab` CLI and `antigravity` CLI (`agy`) already installed and authenticated, configured with model `gemini-3.1-pro`. All repositories they work on live under a local workspace directory (e.g. `~/Workspace/SourceCode/`). The system must support multiple repositories, classify each MR by type (Feature, Bug Fix, Unit Test), and complete the full pipeline within 5 minutes of receiving the trigger event.
 
@@ -28,8 +28,8 @@ The project language is **TypeScript**. The runtime is **Node.js** on **WSL2**. 
 
 All architectural decisions, functional requirements, non-functional requirements, and acceptance criteria live in two documents. These are your source of truth throughout the entire build.
 
-- `docs/AI_Reviewer_Agent_Idea.md` — The design document. Contains the architecture diagram, worktree strategy, context strategy, technology stack, configuration shape, and review output structure.
-- `docs/AI_Reviewer_Agent_PRD.md` — The product requirements document. Contains all FRs (FR-001 through FR-012), NFRs, assumptions, risks, MVP scope, and the 11 acceptance criteria.
+- `docs/Argos_Idea.md` — The design document. Contains the architecture diagram, worktree strategy, context strategy, technology stack, configuration shape, and review output structure.
+- `docs/Argos_PRD.md` — The product requirements document. Contains all FRs (FR-001 through FR-012), NFRs, assumptions, risks, MVP scope, and the 11 acceptance criteria.
 
 Copy both files into the `docs/` directory of the project before starting Phase 1.
 
@@ -57,8 +57,8 @@ The process starts cleanly from the command line. It reads the configuration fil
 
 ### Reference Documents
 
-- `AI_Reviewer_Agent_Idea.md` → Technology Stack, Configuration Example, Repository Structure
-- `AI_Reviewer_Agent_PRD.md` → Technology Stack table, FR-012, Assumptions, Security NFR
+- `Argos_Idea.md` → Technology Stack, Configuration Example, Repository Structure
+- `Argos_PRD.md` → Technology Stack table, FR-012, Assumptions, Security NFR
 
 ---
 
@@ -84,8 +84,8 @@ When the endpoint receives a realistic GitLab MR notification payload (simulate 
 
 ### Reference Documents
 
-- `AI_Reviewer_Agent_Idea.md` → High-Level Architecture (the Google Apps Script → HTTP Endpoint step), Technology Stack
-- `AI_Reviewer_Agent_PRD.md` → FR-001, FR-002, FR-010, Reliability NFR, Assumptions
+- `Argos_Idea.md` → High-Level Architecture (the Google Apps Script → HTTP Endpoint step), Technology Stack
+- `Argos_PRD.md` → FR-001, FR-002, FR-010, Reliability NFR, Assumptions
 
 ---
 
@@ -111,8 +111,8 @@ A simulated MR event for a known repository results in a temporary worktree bein
 
 ### Reference Documents
 
-- `AI_Reviewer_Agent_Idea.md` → High-Level Architecture, Worktree Strategy (full workflow), Repository Structure, Configuration Example, Technology Stack (GitLab Integration section)
-- `AI_Reviewer_Agent_PRD.md` → FR-003, FR-004, FR-011, FR-012, Assumptions, Risks (glab CLI auth expiry, Missing local repository, Worktree cleanup failures)
+- `Argos_Idea.md` → High-Level Architecture, Worktree Strategy (full workflow), Repository Structure, Configuration Example, Technology Stack (GitLab Integration section)
+- `Argos_PRD.md` → FR-003, FR-004, FR-011, FR-012, Assumptions, Risks (glab CLI auth expiry, Missing local repository, Worktree cleanup failures)
 
 ---
 
@@ -140,8 +140,8 @@ For each of the three MR types, the produced report contains all common sections
 
 ### Reference Documents
 
-- `AI_Reviewer_Agent_Idea.md` → Context Strategy, Review Output (all three MR type classifications and their sections), Technology Stack (AI Engine)
-- `AI_Reviewer_Agent_PRD.md` → FR-005, FR-006 (the full MR classification logic and all report sections), Risks (Large merge requests, Antigravity CLI (agy) failures)
+- `Argos_Idea.md` → Context Strategy, Review Output (all three MR type classifications and their sections), Technology Stack (AI Engine)
+- `Argos_PRD.md` → FR-005, FR-006 (the full MR classification logic and all report sections), Risks (Large merge requests, Antigravity CLI (agy) failures)
 
 ---
 
@@ -169,8 +169,8 @@ Sending the same MR event twice results in exactly one review being generated an
 
 ### Reference Documents
 
-- `AI_Reviewer_Agent_Idea.md` → Repository Structure (`reviews/` and `state/` directories), Technology Stack (Persistence: SQLite)
-- `AI_Reviewer_Agent_PRD.md` → FR-007, FR-008, Reliability NFR, Performance NFR
+- `Argos_Idea.md` → Repository Structure (`reviews/` and `state/` directories), Technology Stack (Persistence: SQLite)
+- `Argos_PRD.md` → FR-007, FR-008, Reliability NFR, Performance NFR
 
 ---
 
@@ -200,5 +200,5 @@ The system should be runnable with a single start command. The Google Apps Scrip
 
 ### Reference Documents
 
-- `AI_Reviewer_Agent_Idea.md` → High-Level Architecture (the full flow), Worktree Strategy, Technology Stack (Notifications)
-- `AI_Reviewer_Agent_PRD.md` → FR-009, FR-011, Reliability NFR, Performance NFR (5 minutes), Risks (all entries), Acceptance Criteria (all 11 items), Security NFR
+- `Argos_Idea.md` → High-Level Architecture (the full flow), Worktree Strategy, Technology Stack (Notifications)
+- `Argos_PRD.md` → FR-009, FR-011, Reliability NFR, Performance NFR (5 minutes), Risks (all entries), Acceptance Criteria (all 11 items), Security NFR

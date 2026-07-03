@@ -18,7 +18,7 @@ import fs from "fs-extra";
 import * as path from "path";
 
 async function bootstrap() {
-  logger.info("Starting AI Reviewer Agent (Phase 1)");
+  logger.info("Starting Argos");
 
   try {
     // 1. Load and validate configuration
@@ -186,7 +186,7 @@ Please check the report for detailed findings.`;
     // 6. Start HTTP Server
     startServer(config, queue);
   } catch (err: any) {
-    logger.fatal(`Failed to start AI Reviewer Agent: ${err.message}`);
+    logger.fatal(`Failed to start Argos: ${err.message}`);
     process.exit(1);
   }
 }
