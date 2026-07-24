@@ -115,7 +115,7 @@ ${finalDiff}
             "agy",
             [
               "--model",
-              "gemini-3.1-pro",
+              "Gemini 3.6 Flash (High)",
               "--dangerously-skip-permissions",
               "--add-dir",
               repoPath,
