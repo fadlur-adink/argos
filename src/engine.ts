@@ -93,10 +93,10 @@ ${finalDiff}
         return new Promise<string>((resolve, reject) => {
           logger.info(`Invoking agy CLI for MR !${mrId}...`);
 
-          // Timeout: kill the process if it takes longer than 10 minutes.
+          // Timeout: kill the process if it takes longer than 20 minutes.
           // agy is a full agent that browses files, runs commands, and runs
           // tests — the example output shows 40+ tool-use steps.
-          const TIMEOUT_MS = 10 * 60 * 1000;
+          const TIMEOUT_MS = 20 * 60 * 1000;
           let timedOut = false;
 
           // Invoke agy via bash shell substitution — spawn() passes args
@@ -120,7 +120,7 @@ ${finalDiff}
               "--add-dir",
               repoPath,
               "--print-timeout",
-              "10m",
+              "20m",
               "--print",
               promptContent,
             ],
