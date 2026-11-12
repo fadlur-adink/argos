@@ -1,0 +1,11 @@
+schema_version: 1
+module_path: scripts_and_config
+title: Deployment Scripts & Runtime Configuration
+scope:
+    - scripts/
+    - config/
+source_files: []
+depends_on: []
+related_to:
+    - path: argos_service
+    - path: docs

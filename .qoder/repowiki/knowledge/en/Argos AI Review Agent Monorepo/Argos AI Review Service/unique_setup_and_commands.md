@@ -1,0 +1,1 @@
+Requires a `config/config.json` file (copied from `config/config.example.json`) declaring repositories with `projectId` + `localPath` pointing to checked-out Git repos; requires `glab` to be authenticated before startup; the `agy` binary must be on PATH — it is spawned directly via `spawn('agy', ...)` rather than through npm.

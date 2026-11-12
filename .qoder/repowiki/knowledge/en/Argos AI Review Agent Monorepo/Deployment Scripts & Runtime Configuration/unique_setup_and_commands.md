@@ -1,0 +1,1 @@
+`google-apps-script.js` requires a Gmail filter labeling GitLab MR emails and a time-driven trigger running `processNewEmails` every minute; `WEBHOOK_URL` must be set to the running agent's `/webhook`. `test-webhook.sh` expects the agent already listening on `http://localhost:8000/webhook`.

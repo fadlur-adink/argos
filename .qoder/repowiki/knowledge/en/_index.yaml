@@ -1,0 +1,57 @@
+# 知识卡导出索引文件
+schema_version: 1
+locale: en-US
+branch: main
+nodes_managed: true
+exported_at: "2026-11-12T09:15:07Z"
+modules:
+    "":
+        dir_name: Argos AI Review Agent Monorepo
+        title: Argos AI Review Agent Monorepo
+        scope:
+            - README.md
+            - .gitignore
+            - package.json
+            - pnpm-workspace.yaml
+            - tsconfig.json
+            - package-lock.json
+            - pnpm-lock.yaml
+        source_files: []
+        children:
+            - argos_service
+            - docs
+            - scripts_and_config
+        depends_on: []
+        related_to: []
+    argos_service:
+        dir_name: Argos AI Review Service
+        title: Argos AI Review Service
+        scope:
+            - src/
+        source_files: []
+        children: []
+        depends_on: []
+        related_to:
+            - path: scripts_and_config
+    docs:
+        dir_name: Argos Project Documentation
+        title: Argos Project Documentation
+        scope:
+            - docs/
+        source_files: []
+        children: []
+        depends_on: []
+        related_to:
+            - path: scripts_and_config
+    scripts_and_config:
+        dir_name: Deployment Scripts & Runtime Configuration
+        title: Deployment Scripts & Runtime Configuration
+        scope:
+            - scripts/
+            - config/
+        source_files: []
+        children: []
+        depends_on: []
+        related_to:
+            - path: argos_service
+            - path: docs

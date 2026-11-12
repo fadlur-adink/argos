@@ -1,0 +1,2 @@
+- TypeScript source lives under `src/` and compiles to `dist/` using the root tsconfig.json settings (strict mode, es2022 target).
+- Runtime configuration for the agent is externalized into JSON files under `scripts_and_config/` rather than hard-coded in the service.

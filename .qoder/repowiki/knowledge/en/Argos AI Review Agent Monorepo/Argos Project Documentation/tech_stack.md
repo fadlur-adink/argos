@@ -1,0 +1,1 @@
+Documents target Node.js + TypeScript runtime on WSL2, Antigravity CLI (`agy`) with model `gemini-3.1-pro`, `glab` CLI, SQLite, Gmail filters, Google Apps Script, Git worktrees, and optional Telegram notifications.

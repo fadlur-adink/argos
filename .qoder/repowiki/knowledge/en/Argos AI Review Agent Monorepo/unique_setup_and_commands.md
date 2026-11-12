@@ -1,0 +1,1 @@
+Run the service directly from the repo root with `pnpm start` (maps to `ts-node src/index.ts`); native sqlite3 bindings require `pnpm allow-build sqlite3` because of the `allowBuilds` setting in pnpm-workspace.yaml.

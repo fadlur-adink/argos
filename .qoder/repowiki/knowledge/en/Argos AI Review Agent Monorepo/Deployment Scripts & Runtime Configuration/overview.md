@@ -1,0 +1,1 @@
+Supporting scripts and JSON configuration for the Argos agent: a Google Apps Script bridge from Gmail to the webhook, a curl-based webhook smoke test, and per-installation runtime config.

@@ -1,0 +1,1 @@
+Google Apps Script (`GmailApp`, `UrlFetchApp`) for the email bridge; plain bash + `curl` for the webhook test; JSON for configuration.

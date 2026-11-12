@@ -1,0 +1,1 @@
+pnpm workspace that bundles the Node.js Argos review service, its deployment scripts/configs, and project documentation under a shared TypeScript/Express runtime.

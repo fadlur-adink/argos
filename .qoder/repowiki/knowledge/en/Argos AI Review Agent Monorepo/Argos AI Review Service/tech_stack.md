@@ -1,0 +1,1 @@
+TypeScript + Express for the HTTP layer; Zod for runtime configuration validation; SQLite-backed persistence via `db.ts`; external `agy` Go agent invoked as a subprocess (model `gemini-3.8-flash-high`, `--dangerously-skip-permissions`, `--print-timeout 20m`); GitLab integration through the `glab` CLI (`verifyGlabAuth`, `getMrDetails`, `getMrDiff`).

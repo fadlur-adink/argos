@@ -1,0 +1,2 @@
+- Requirements are numbered with a stable prefix (e.g., FR-001 through FR-012) so they can be cross-referenced by risks, assumptions, and acceptance criteria.
+- MVP vs. future scope is explicitly separated into dedicated sections rather than mixed into requirements.

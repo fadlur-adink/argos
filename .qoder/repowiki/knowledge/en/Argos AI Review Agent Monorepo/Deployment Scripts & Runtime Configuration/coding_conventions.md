@@ -1,0 +1,2 @@
+- Configuration is expressed as flat JSON files keyed by repository name, each entry carrying a numeric `projectId` and an absolute filesystem `localPath`.
+- External service credentials in `config.json` are kept as empty strings when unavailable, with `config.example.json` providing placeholder values documenting the expected shape.

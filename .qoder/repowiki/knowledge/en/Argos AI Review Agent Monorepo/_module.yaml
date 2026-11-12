@@ -1,0 +1,14 @@
+schema_version: 1
+module_path: ""
+title: Argos AI Review Agent Monorepo
+scope:
+    - README.md
+    - .gitignore
+    - package.json
+    - pnpm-workspace.yaml
+    - tsconfig.json
+    - package-lock.json
+    - pnpm-lock.yaml
+source_files: []
+depends_on: []
+related_to: []

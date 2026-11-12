@@ -1,0 +1,1 @@
+Markdown documentation for the Argos AI-powered merge request review agent, covering product requirements, build prompts, design ideas, and Google Apps Script deployment setup.

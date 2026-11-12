@@ -1,0 +1,1 @@
+Node.js service that receives GitLab merge-request webhooks, runs an agentic code review against the target repository, and persists reports with notifications via Telegram, email, and desktop alerts.

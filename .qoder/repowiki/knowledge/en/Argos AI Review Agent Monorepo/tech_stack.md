@@ -1,0 +1,1 @@
+Node.js + TypeScript (ts-node at dev time, compiled to CommonJS), Express 5, Pino logging, SQLite/sqlite3 for persistence, Zod for validation — all declared at the workspace root and consumed by the service child.

@@ -1,0 +1,5 @@
+- External or flaky operations are wrapped with the shared `withRetry(fn, maxRetries, baseDelayMs, context)` helper from `retry.ts` to add exponential backoff logging.
+- Configuration is loaded once at bootstrap via `loadConfig()` which reads `config/config.json` and validates it against Zod schemas (`ConfigSchema`, `RepositoryConfigSchema`, `EmailConfigSchema`) before any other subsystem starts.
+- Long-running subprocesses (the `agy` CLI) are launched with `child_process.spawn`, a `setTimeout`-based kill guard, and `stdio: ['ignore','pipe','inherit']` so stdout is captured while stderr goes straight to the parent terminal.
+- Side-effect channels (Telegram, email, desktop notifier) are kept as separate thin modules that consume the shared `Config` type and `logger`, keeping the processing pipeline free of transport-specific logic.
+- All async errors bubble up to the caller's try/catch where they are logged via the centralized `logger` module rather than thrown without context.
